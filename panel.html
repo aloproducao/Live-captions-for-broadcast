@@ -18,7 +18,8 @@
     }
     .controls {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
         align-items: center;
         font-family: 'Cousine', monospace;
         font-size: 1em;
@@ -27,9 +28,16 @@
         background-color: rgb(51, 51, 51);
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        max-width: 500px;
+        justify-content: space-between;
     }
     .controls label, .controls select, .controls button, .controls input {
         margin: 0.2em;
+    }
+    .controls > div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
     }
     .output {
         display: flex;
@@ -57,7 +65,6 @@
         color: white;
         font-family: 'Cousine', monospace;
         border: 2px solid #5cf664;
-
         background-color: transparent;
         border-radius: 0.375em;
         transition: background-color 0.3s ease;
@@ -79,14 +86,18 @@
 </head>
 <body>
 <div class="controls">
-    <label for="microphoneList">Escolha um microfone:</label>
-    <select id="microphoneList"></select>
+    <div>
+        <label for="microphoneList">Escolha um microfone:</label>
+        <select id="microphoneList"></select>
+    </div>
     <button id="startButton">Iniciar</button>
     
     <!-- Seletor de Cor de Fundo e Letra -->
     <div class="color-picker">
         <label for="bgColor">Cor de Fundo: </label>
         <input type="color" id="bgColor" name="bgColor" value="#000000">
+    </div>
+    <div class="color-picker">
         <label for="textColor">Cor da Letra: </label>
         <input type="color" id="textColor" name="textColor" value="#ffffff">
     </div>
@@ -95,6 +106,8 @@
     <div class="font-slider">
         <label for="fontSize">Tamanho da Fonte: </label>
         <input type="range" id="fontSize" name="fontSize" min="10" max="100" value="25">
+    </div>
+    <div class="font-slider">
         <label for="outputWidth">Largura do Output: </label>
         <input type="range" id="outputWidth" name="outputWidth" min="20" max="100" value="60">
     </div>
@@ -104,8 +117,6 @@
 </div>
 
 <div class="output" id="output">As legendas aparecerão aqui...</div>
-
-
 
 <script>
     const output = document.getElementById('output');

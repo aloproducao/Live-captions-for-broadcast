@@ -30,19 +30,22 @@
     }
     .output {
         display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
         align-items: center;
-        justify-content: center;
         background-color: rgba(0, 0, 0, 0.7);
         color: white;
         font-family: 'Cousine', monospace;
-        font-size: 2em;
+        font-size: 2.5em;
         line-height: 1.1em;
         letter-spacing: 0.05em;
         padding: 0.5em;
         border-radius: 0.5em;
-        margin: auto;
         width: 80%;
+        height: 150px; /* Você pode ajustar a altura conforme necessário */
+        overflow-y: auto;
         text-align: center;
+        margin: auto;
     }
     #startButton {
     display: inline-block;

@@ -192,17 +192,19 @@
             document.getElementById('outputWidth').value = outputWidth;
         }
     }
-    
     function resetPreferences() {
-        localStorage.removeItem('bgColor');
-        localStorage.removeItem('textColor');
-        localStorage.removeItem('fontSize');
-        localStorage.removeItem('outputWidth');
-        loadPreferences();
+        if(confirm('Tem certeza de que deseja resetar as preferências?')) {
+            localStorage.removeItem('bgColor');
+            localStorage.removeItem('textColor');
+            localStorage.removeItem('fontSize');
+            localStorage.removeItem('outputWidth');
+            loadPreferences();
+            location.reload();
+        }
     }
     
     document.getElementById('resetPreferences').addEventListener('click', resetPreferences);
-    
+   
     document.getElementById('bgColor').addEventListener('input', function() {
         document.body.style.backgroundColor = this.value;
         localStorage.setItem('bgColor', this.value);

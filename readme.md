@@ -41,4 +41,4 @@ This system offers a simple and cost-effective way to make audiovisual content m
 
 ---
 
-Developed with ❤️ by Miguel kallemback @aloproducao
+Developed with ❤️ by Miguel kallemback @aloproducao miguelkallemback.seven@gmail.com << for support

@@ -87,7 +87,7 @@
     <select id="microphoneList"></select>
     <button id="startButton">Iniciar</button>
 </div>
-<div class="output" id="output">As legendas aparecerão aqui...</div>
+<div class="output" id="output"></div>
 
 <script>
     const output = document.getElementById('output');
@@ -95,6 +95,7 @@
     const startButton = document.getElementById('startButton');
     let recognition;
     let lastPhrase;
+    let phraseElements = [];
 
     async function getMicrophones() {
         try {
@@ -117,9 +118,8 @@
         const urlParams = new URLSearchParams(window.location.search);
         recognition.lang = urlParams.get('lang') || 'pt-BR';
         recognition.interimResults = true;
-
+        
         recognition.onresult = (event) => {
-            output.innerHTML = '';
             let results = event.results;
             let transcript = Array.from(results).map(result => result[0].transcript.split(' ')).reduce((acc, val) => acc.concat(val), []);
             let phrases = [];
@@ -127,18 +127,31 @@
                 phrases.push(transcript.slice(i, i + 3).join(' '));
             }
 
+            if(phraseElements.length > phrases.length) {
+                for(let i = phrases.length; i < phraseElements.length; ++i) {
+                    output.removeChild(phraseElements[i]);
+                }
+                phraseElements = phraseElements.slice(0, phrases.length);
+            }
+
             phrases.forEach((phrase, index) => {
-                let span = document.createElement('span');
-                span.textContent = phrase;
-                span.className = 'phrase';
+                if(phraseElements[index]) {
+                    phraseElements[index].textContent = phrase;
+                } else {
+                    let span = document.createElement('span');
+                    span.textContent = phrase;
+                    span.className = 'phrase';
+                    output.appendChild(span);
+                    phraseElements.push(span);
+                }
+
                 if(index === phrases.length - 1 && !results[results.length - 1].isFinal) {
-                    span.classList.add('highlight');
-                    if(lastPhrase) {
+                    phraseElements[index].classList.add('highlight');
+                    if(lastPhrase && lastPhrase !== phraseElements[index]) {
                         lastPhrase.classList.remove('highlight');
                     }
-                    lastPhrase = span;
+                    lastPhrase = phraseElements[index];
                 }
-                output.appendChild(span);
             });
         };
 

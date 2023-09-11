@@ -3,6 +3,7 @@
 ## Motivation
 
 In the audiovisual industry, accessibility is a growing need. As a developer who works with audiovisual production, I understand the importance of making any content accessible to all audiences. This real-time speech recognition system appears as a solution to allow any content to be accessible at a low cost. Using this tool, you can generate live captions for your broadcasts, making access easier for people with hearing impairments and expanding your reach to audiences who speak different languages.
+![Captura de tela de 2023-09-10 23-26-52](https://github.com/aloproducao/Live-captions-for-broadcast-/assets/43450424/9e492e2e-9075-47e9-a8a6-7d50b3844594)
 
 ## How it works
 

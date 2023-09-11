@@ -89,14 +89,19 @@ label[for="microphoneList"] {
     let recognition;
 
     async function getMicrophones() {
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const microphones = devices.filter(device => device.kind === 'audioinput');
-        microphones.forEach(mic => {
-            const option = document.createElement('option');
-            option.value = mic.deviceId;
-            option.textContent = mic.label || 'Microfone ' + (microphoneList.length + 1);
-            microphoneList.appendChild(option);
-        });
+        try {
+            await navigator.mediaDevices.getUserMedia({ audio: true }); // Solicita permissão para acessar o microfone
+            const devices = await navigator.mediaDevices.enumerateDevices();
+            const microphones = devices.filter(device => device.kind === 'audioinput');
+            microphones.forEach(mic => {
+                const option = document.createElement('option');
+                option.value = mic.deviceId;
+                option.textContent = mic.label || 'Microfone ' + (microphoneList.length + 1);
+                microphoneList.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Erro ao acessar o microfone: ', error);
+        }
     }
 
     function startRecognition() {
@@ -124,9 +129,10 @@ label[for="microphoneList"] {
         recognition.start();
     }
 
-    startButton.addEventListener('click', startRecognition);
+    window.onload = getMicrophones; // Inicia a função getMicrophones assim que a página é carregada
 
-    getMicrophones();
+    startButton.addEventListener('click', startRecognition);
 </script>
+
 </body>
 </html>

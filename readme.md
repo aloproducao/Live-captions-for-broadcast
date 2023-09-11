@@ -1,45 +1,49 @@
 # Real-time Speech Recognition System
+![image](https://github.com/aloproducao/Live-captions-for-broadcast/assets/43450424/04b199d6-8a51-4656-ae53-54b159fcc9c6)
 
 ## Motivation
 
-In the audiovisual industry, accessibility is a growing need. As a developer who works with audiovisual production, I understand the importance of making any content accessible to all audiences. This real-time speech recognition system appears as a solution to allow any content to be accessible at a low cost. Using this tool, you can generate live captions for your broadcasts, making access easier for people with hearing impairments and expanding your reach to audiences who speak different languages.
-![Captura de tela de 2023-09-10 23-26-52](https://github.com/aloproducao/Live-captions-for-broadcast/assets/43450424/afd1ca99-e1d6-4989-a0e6-d5af33bb85d1)
+In the audiovisual industry, accessibility is a growing need. As a developer who works closely with the audiovisual production, I understand the critical importance of ensuring content is accessible to all audiences. This real-time speech recognition system emerges as a solution to facilitate low-cost accessibility, allowing live captions for broadcasts. It not only aids individuals with hearing impairments but also significantly expands your reach to non-native audiences by offering real-time translations in various languages.
 
+## Features
 
-## How it works
+- **Real-time Transcription**: Leveraging the browser's speech recognition API, it transcribes audio in real time, displaying live captions on your screen.
+- **Customizable Interface**: Adjust text size, background color, and text color to suit your preferences and improve readability.
+- **Language Flexibility**: Easily switch between multiple languages for transcription with just a simple modification in the URL.
+- **Automatic Preferences Saving**: Your customized settings are automatically saved in the browser’s local storage, ensuring a consistent user experience even after a browser refresh or reopening the tool at a later time.
 
-This system uses the browser's speech recognition API to transcribe audio in real time. To get started, follow the steps below:
+## How it Works
 
 1. Open the HTML file in a supported browser (Google Chrome recommended).
-2. You will be asked to give permission to access your microphone. Grant the necessary permission.
-3. Select a microphone from the list of available microphones.
-4. Click the "Start" button to begin transcription.
-5. Speak into the selected microphone and see subtitles generated in real time on the screen.
+2. Grant the necessary permissions when prompted to access your microphone.
+3. Select a microphone from the available list.
+4. Click the "Start" button to initiate the transcription process.
+5. Speak clearly into the selected microphone, and watch the real-time captions appear on the screen.
 
 ### Specifying a Language
 
-You can specify a language for the transcription by adding the `?lang=` parameter to the URL. For example, to use English, you would use the URL `yoursite.com?lang=en-US`. If no language is specified, the default will be Brazilian Portuguese (`pt-BR`).
+Specify the transcription language by adding the `?lang=` parameter to the URL. For instance, to select English, use the URL `yoursite.com?lang=en-US`. In the absence of a specified language, the default is Brazilian Portuguese (`pt-BR`).
 
 ## Default Language Table
 
 | Language Code | Language Name |
-|------------------|--------------------------|
-| pt-BR | Portuguese (Brazil) |
-| en-US | English (US) |
-| es-ES | Spanish (Spain) |
-| fr-FR | French (France) |
-| de-DE | German (Germany) |
-| it-IT | Italian (Italy) |
-| ru-RU | Russian (Russia) |
-| ja-JP | Japanese (Japan) |
-| zh-CN | Chinese (China) |
-
-
+|---------------|---------------|
+| pt-BR         | Portuguese (Brazil) |
+| en-US         | English (US) |
+| es-ES         | Spanish (Spain) |
+| fr-FR         | French (France) |
+| de-DE         | German (Germany) |
+| it-IT         | Italian (Italy) |
+| ru-RU         | Russian (Russia) |
+| ja-JP         | Japanese (Japan) |
+| zh-CN         | Chinese (China) |
 
 ## Conclusion
 
-This system offers a simple and cost-effective way to make audiovisual content more accessible to a wider audience. We hope this tool is useful for your audiovisual production needs.
+This system is a simple yet effective avenue to enhance the accessibility of audiovisual content, reaching a broader audience seamlessly. We anticipate that this tool will be a valuable asset in meeting your audiovisual production requirements.
 
 ---
 
-Developed with ❤️ by Miguel kallemback @aloproducao miguelkallemback.seven@gmail.com << for support
+Developed with ❤️ by Miguel Kallemback  
+[@aloproducao](https://github.com/aloproducao)  
+📧 miguelkallemback.seven@gmail.com (for support)

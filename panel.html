@@ -6,6 +6,8 @@
 <meta name="keywords" content="reconhecimento de fala, transcrição de áudio, acessibilidade, conteúdo audiovisual, legendas ao vivo, Miguel Kallemback, multilíngue, tecnologia de reconhecimento de voz">
 <meta name="author" content="Miguel Kallemback">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&family=Cousine&family=Montserrat:wght@400&family=Oswald:wght@400&family=Lobster&display=swap">
+
 <style>
     body {
         display: flex;
@@ -111,7 +113,17 @@
         <label for="outputWidth">Largura do Output: </label>
         <input type="range" id="outputWidth" name="outputWidth" min="20" max="100" value="60">
     </div>
-
+    <div>
+        <label for="fontFamily">Estilo da Fonte: </label>
+        <select id="fontFamily">
+            <option value="'Cousine', monospace">Cousine</option>
+            <option value="'Roboto', sans-serif">Roboto</option>
+            <option value="'Montserrat', sans-serif">Montserrat</option>
+            <option value="'Oswald', sans-serif">Oswald</option>
+            <option value="'Lobster', cursive">Lobster</option>
+        </select>
+    </div>
+    
     <!-- Botão para apagar preferências -->
     <button id="resetPreferences">Resetar Preferências</button>
 </div>
@@ -171,7 +183,12 @@
         const textColor = localStorage.getItem('textColor');
         const fontSize = localStorage.getItem('fontSize');
         const outputWidth = localStorage.getItem('outputWidth');
-    
+        const fontFamily = localStorage.getItem('fontFamily');
+    if (fontFamily) {
+        document.getElementById('output').style.fontFamily = fontFamily;
+        document.getElementById('fontFamily').value = fontFamily;
+    }
+}
         if (bgColor) {
             document.body.style.backgroundColor = bgColor;
             document.getElementById('bgColor').value = bgColor;
@@ -191,13 +208,14 @@
             document.getElementById('output').style.width = outputWidth + '%';
             document.getElementById('outputWidth').value = outputWidth;
         }
-    }
+    
     function resetPreferences() {
         if(confirm('Tem certeza de que deseja resetar as preferências?')) {
             localStorage.removeItem('bgColor');
             localStorage.removeItem('textColor');
             localStorage.removeItem('fontSize');
             localStorage.removeItem('outputWidth');
+            localStorage.removeItem('fontFamily');
             loadPreferences();
             location.reload();
         }
@@ -205,6 +223,10 @@
     
     document.getElementById('resetPreferences').addEventListener('click', resetPreferences);
    
+    document.getElementById('fontFamily').addEventListener('change', function() {
+    document.getElementById('output').style.fontFamily = this.value;
+    localStorage.setItem('fontFamily', this.value);
+});
     document.getElementById('bgColor').addEventListener('input', function() {
         document.body.style.backgroundColor = this.value;
         localStorage.setItem('bgColor', this.value);

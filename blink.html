@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="O Sistema de Reconhecimento de Fala em Tempo Real desenvolvido por Miguel Kallemback transforma a acessibilidade em conteúdo audiovisual, oferecendo transcrição de áudio em tempo real em diversos idiomas. Ideal para profissionais da indústria audiovisual procurando uma solução econômica para tornar seu conteúdo acessível a um público mais amplo.">
+<meta name="keywords" content="reconhecimento de fala, transcrição de áudio, acessibilidade, conteúdo audiovisual, legendas ao vivo, Miguel Kallemback, multilíngue, tecnologia de reconhecimento de voz">
+<meta name="author" content="Miguel Kallemback">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: black;
+        color: white;
+        height: 100vh;
+        margin: 0;
+    }
+    .controls {
+        display: flex;
+        align-items: center;
+        font-family: 'Cousine', monospace;
+        font-size: 1.2em;
+        margin: 1em;
+        color: white;
+    }
+    .controls label, .controls select, .controls button {
+        margin: 0.5em;
+    }
+    .output {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        font-family: 'Cousine', monospace;
+        font-size: 2.5em;
+        line-height: 1.1em;
+        letter-spacing: 0.05em;
+        padding: 0.5em;
+        border-radius: 0.5em;
+        width: 80%;
+        height: 150px;
+        overflow-y: auto;
+        text-align: center;
+        margin: auto;
+    }
+    #startButton {
+        display: inline-block;
+        padding: 0.5em 1em;
+        font-size: 1rem;
+        font-family: 'Cousine', monospace;
+        color: #5cf676;
+        border: 2px solid #5cf664;
+        background-color: transparent;
+        border-radius: 0.375em;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    #startButton:hover {
+        background-color: #8b5cf6;
+        color: white;
+    }
+    label[for="microphoneList"] {
+        font-family: 'Cousine', monospace;
+        font-size: 1rem;
+        color: #8b5cf6;
+        margin-right: 0.5em;
+    }
+    .phrase {
+        display: inline-block;
+        margin: 0 0.2em;
+        padding: 0.2em 0.4em;
+        border-radius: 0.375em;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .phrase.highlight {
+        background-color: #8b5cf6;
+        color: white;
+    }
+</style>
+<title>Reconhecimento de Fala - LiveCap</title>
+</head>
+<body>
+<div class="controls">
+    <label for="microphoneList">Escolha um microfone:</label>
+    <select id="microphoneList"></select>
+    <button id="startButton">Iniciar</button>
+</div>
+<div class="output" id="output">As legendas aparecerão aqui...</div>
+
+<script>
+    const output = document.getElementById('output');
+    const microphoneList = document.getElementById('microphoneList');
+    const startButton = document.getElementById('startButton');
+    let recognition;
+    let lastPhrase;
+
+    async function getMicrophones() {
+        try {
+            await navigator.mediaDevices.getUserMedia({ audio: true });
+            const devices = await navigator.mediaDevices.enumerateDevices();
+            const microphones = devices.filter(device => device.kind === 'audioinput');
+            microphones.forEach(mic => {
+                const option = document.createElement('option');
+                option.value = mic.deviceId;
+                option.textContent = mic.label || 'Microfone ' + (microphoneList.length + 1);
+                microphoneList.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Erro ao acessar o microfone: ', error);
+        }
+    }
+
+    function startRecognition() {
+        recognition = new webkitSpeechRecognition();
+        const urlParams = new URLSearchParams(window.location.search);
+        recognition.lang = urlParams.get('lang') || 'pt-BR';
+        recognition.interimResults = true;
+
+        recognition.onresult = (event) => {
+            output.innerHTML = '';
+            let results = event.results;
+            let transcript = Array.from(results).map(result => result[0].transcript.split(' ')).reduce((acc, val) => acc.concat(val), []);
+            let phrases = [];
+            for(let i = 0; i < transcript.length; i += 3) {
+                phrases.push(transcript.slice(i, i + 3).join(' '));
+            }
+
+            phrases.forEach((phrase, index) => {
+                let span = document.createElement('span');
+                span.textContent = phrase;
+                span.className = 'phrase';
+                if(index === phrases.length - 1 && !results[results.length - 1].isFinal) {
+                    span.classList.add('highlight');
+                    if(lastPhrase) {
+                        lastPhrase.classList.remove('highlight');
+                    }
+                    lastPhrase = span;
+                }
+                output.appendChild(span);
+            });
+        };
+
+        recognition.onerror = (event) => {
+            console.error(event.error);
+        };
+
+        recognition.onend = () => {
+            recognition.start();
+        };
+
+        recognition.start();
+    }
+
+    window.onload = getMicrophones;
+
+    startButton.addEventListener('click', startRecognition);
+</script>
+</body>
+</html>

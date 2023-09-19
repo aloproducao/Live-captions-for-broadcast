@@ -253,73 +253,84 @@
 
       startButton.addEventListener("click", startRecognition);
 
-      document.getElementById("uppercaseCheckbox").addEventListener("change", function () {
-  if (this.checked) {
-    document.getElementById("output").style.textTransform = "uppercase";
-    localStorage.setItem("uppercase", "true");
-  } else {
-    document.getElementById("output").style.textTransform = "none";
-    localStorage.setItem("uppercase", "false");
-  }
-});
+      function loadPreferences() {
+        const bgColor = localStorage.getItem("bgColor");
+        const textColor = localStorage.getItem("textColor");
+        const fontSize = localStorage.getItem("fontSize");
+        const outputWidth = localStorage.getItem("outputWidth");
+        const fontFamily = localStorage.getItem("fontFamily");
+        if (fontFamily) {
+          document.getElementById("output").style.fontFamily = fontFamily;
+          document.getElementById("fontFamily").value = fontFamily;
+        }
+      }
+      if (bgColor) {
+        document.body.style.backgroundColor = bgColor;
+        document.getElementById("bgColor").value = bgColor;
+      }
 
-function loadPreferences() {
-  const bgColor = localStorage.getItem("bgColor");
-  const textColor = localStorage.getItem("textColor");
-  const fontSize = localStorage.getItem("fontSize");
-  const outputWidth = localStorage.getItem("outputWidth");
-  const fontFamily = localStorage.getItem("fontFamily");
-  const uppercase = localStorage.getItem("uppercase");
+      if (textColor) {
+        document.body.style.color = textColor;
+        document.getElementById("textColor").value = textColor;
+      }
 
-  if (fontFamily) {
-    document.getElementById("output").style.fontFamily = fontFamily;
-    document.getElementById("fontFamily").value = fontFamily;
-  }
-  
-  if (bgColor) {
-    document.body.style.backgroundColor = bgColor;
-    document.getElementById("bgColor").value = bgColor;
-  }
+      if (fontSize) {
+        document.getElementById("output").style.fontSize = fontSize + "px";
+        document.getElementById("fontSize").value = fontSize;
+      }
 
-  if (textColor) {
-    document.body.style.color = textColor;
-    document.getElementById("textColor").value = textColor;
-  }
+      if (outputWidth) {
+        document.getElementById("output").style.width = outputWidth + "%";
+        document.getElementById("outputWidth").value = outputWidth;
+      }
 
-  if (fontSize) {
-    document.getElementById("output").style.fontSize = fontSize + "px";
-    document.getElementById("fontSize").value = fontSize;
-  }
+      function resetPreferences() {
+        if (confirm("Tem certeza de que deseja resetar as preferências?")) {
+          localStorage.removeItem("bgColor");
+          localStorage.removeItem("textColor");
+          localStorage.removeItem("fontSize");
+          localStorage.removeItem("outputWidth");
+          localStorage.removeItem("fontFamily");
+          loadPreferences();
+          location.reload();
+        }
+      }
 
-  if (outputWidth) {
-    document.getElementById("output").style.width = outputWidth + "%";
-    document.getElementById("outputWidth").value = outputWidth;
-  }
+      document
+        .getElementById("resetPreferences")
+        .addEventListener("click", resetPreferences);
 
-  if (uppercase === "true") {
-    document.getElementById("uppercaseCheckbox").checked = true;
-    document.getElementById("output").style.textTransform = "uppercase";
-  } else {
-    document.getElementById("uppercaseCheckbox").checked = false;
-    document.getElementById("output").style.textTransform = "none";
-  }
-}
+      document
+        .getElementById("fontFamily")
+        .addEventListener("change", function () {
+          document.getElementById("output").style.fontFamily = this.value;
+          localStorage.setItem("fontFamily", this.value);
+        });
+      document.getElementById("bgColor").addEventListener("input", function () {
+        document.body.style.backgroundColor = this.value;
+        localStorage.setItem("bgColor", this.value);
+      });
 
-function resetPreferences() {
-  if (confirm("Tem certeza de que deseja resetar as preferências?")) {
-    localStorage.removeItem("bgColor");
-    localStorage.removeItem("textColor");
-    localStorage.removeItem("fontSize");
-    localStorage.removeItem("outputWidth");
-    localStorage.removeItem("fontFamily");
-    localStorage.removeItem("uppercase");
-    loadPreferences();
-    location.reload();
-  }
-}
+      document
+        .getElementById("textColor")
+        .addEventListener("input", function () {
+          document.body.style.color = this.value;
+          localStorage.setItem("textColor", this.value);
+        });
 
+      document
+        .getElementById("fontSize")
+        .addEventListener("input", function () {
+          document.getElementById("output").style.fontSize = this.value + "px";
+          localStorage.setItem("fontSize", this.value);
+        });
 
-
+      document
+        .getElementById("outputWidth")
+        .addEventListener("input", function () {
+          document.getElementById("output").style.width = this.value + "%";
+          localStorage.setItem("outputWidth", this.value);
+        });
 
       window.onload = function () {
 

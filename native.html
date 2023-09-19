@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="O Sistema de Reconhecimento de Fala em Tempo Real desenvolvido por Miguel Kallemback transforma a acessibilidade em conteúdo audiovisual, oferecendo transcrição de áudio em tempo real em diversos idiomas. Ideal para profissionais da indústria audiovisual procurando uma solução econômica para tornar seu conteúdo acessível a um público mais amplo."
+    />
+    <meta
+      name="keywords"
+      content="reconhecimento de fala, transcrição de áudio, acessibilidade, conteúdo audiovisual, legendas ao vivo, Miguel Kallemback, multilíngue, tecnologia de reconhecimento de voz"
+    />
+    <meta name="author" content="Miguel Kallemback" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="javascript" src="script.js"></script>
+    <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&family=Cousine&family=Montserrat:wght@400&family=Oswald:wght@400&family=Lobster&family=Pacifico&family=Quicksand:wght@500&family=Lato:wght@400&family=Source+Sans+Pro:wght@400&family=Open+Sans:wght@400&family=Zilla+Slab:wght@500&family=Playfair+Display:wght@400&family=Merriweather:wght@400&family=Arvo:wght@400&family=Ubuntu:wght@400&display=swap"
+  />
+
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: black;
+        color: white;
+        height: 100vh;
+        margin: 0;
+        transition: text 0.3s ease;
+      }
+      .controls {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        font-family: "Cousine", monospace;
+        font-size: 1em;
+        margin: 0.5em;
+        padding: 0.5em;
+        background-color: rgb(51, 51, 51);
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        max-width: 500px;
+        justify-content: space-between;
+      }
+      .controls label,
+      .controls select,
+      .controls button,
+      .controls input {
+        margin: 0.2em;
+      }
+      .controls > div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .output {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0);
+        font-family: "Cousine", monospace;
+        font-size: 2.5em;
+        line-height: 1.1em;
+        letter-spacing: 0.05em;
+        padding: 0.5em;
+        border-radius: 0.5em;
+        width: 60%;
+        height: 150px;
+        overflow-y: auto;
+        text-align: left !important;
+        margin: auto;
+        transition: background-color 0.3s;
+        transition: text 0.3s ease !important;
+      }
+      #startButton {
+        display: inline-block;
+        padding: 0.5em 1em;
+        font-size: 1rem;
+        color: white;
+        font-family: "Cousine", monospace;
+        border: 2px solid #5cf664;
+        background-color: transparent;
+        border-radius: 0.375em;
+        transition: background-color 0.3s ease;
+      }
+      #startButton:hover {
+        background-color: #5cf664;
+        color: rgb(61, 61, 61);
+      }
+      .color-picker,
+      .font-slider {
+        display: flex;
+        align-items: center;
+        margin: 0.2em;
+      }
+      .color-picker label,
+      .font-slider label {
+        margin-right: 0.5em;
+      }
+      #output {
+        transition: text 0.3s ease;
+      }
+    </style>
+    <title>Reconhecimento de Fala - LiveCap</title>
+  </head>
+  <body>
+    <div class="controls">
+      <div>
+        <label for="microphoneList">Escolha um microfone:</label>
+        <select id="microphoneList"></select>
+      </div>
+      <button id="startButton">Iniciar</button>
+
+      <!-- Seletor de Cor de Fundo e Letra -->
+      <div class="color-picker">
+        <label for="bgColor">Cor de Fundo: </label>
+        <input type="color" id="bgColor" name="bgColor" value="#000000" />
+      </div>
+      <div class="color-picker">
+        <label for="textColor">Cor da Letra: </label>
+        <input type="color" id="textColor" name="textColor" value="#ffffff" />
+      </div>
+
+      <!-- Controle Deslizante para a Largura do Output e Tamanho da Fonte -->
+      <div class="font-slider">
+        <label for="fontSize">Tamanho da Fonte: </label>
+        <input
+          type="range"
+          id="fontSize"
+          name="fontSize"
+          min="10"
+          max="100"
+          value="25"
+        />
+      </div>
+      <div class="font-slider">
+        <label for="outputWidth">Largura do Output: </label>
+        <input
+          type="range"
+          id="outputWidth"
+          name="outputWidth"
+          min="20"
+          max="100"
+          value="60"
+        />
+      </div>
+      <div>
+        <label for="fontFamily">Estilo da Fonte: </label>
+        <select id="fontFamily">
+          <option value="'Cousine', monospace">Cousine</option>
+          <option value="'Roboto', sans-serif">Roboto</option>
+          <option value="'Montserrat', sans-serif">Montserrat</option>
+          <option value="'Oswald', sans-serif">Oswald</option>
+          <option value="'Lobster', cursive">Lobster</option>
+          <option value="'Pacifico', cursive">Pacifico</option>
+          <option value="'Quicksand', sans-serif">Quicksand</option>
+          <option value="'Lato', sans-serif">Lato</option>
+          <option value="'Source Sans Pro', sans-serif">Source Sans Pro</option>
+          <option value="'Open Sans', sans-serif">Open Sans</option>
+          <option value="'Zilla Slab', serif">Zilla Slab</option>
+          <option value="'Playfair Display', serif">Playfair Display</option>
+          <option value="'Merriweather', serif">Merriweather</option>
+          <option value="'Arvo', serif">Arvo</option>
+          <option value="'Ubuntu', sans-serif">Ubuntu</option>
+        </select>
+      </div>
+
+      
+<div>
+  <label for="uppercaseCheckbox">Todas as Letras Maiúsculas: </label>
+  <input type="checkbox" id="uppercaseCheckbox" name="uppercaseCheckbox" />
+</div>
+<!-- Botão para apagar preferências -->
+      <button id="resetPreferences">Resetar Preferências</button>
+    </div>
+
+    <div class="output" id="output">As legendas aparecerão aqui...</div>
+
+    
+  </body>
+</html>

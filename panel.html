@@ -204,10 +204,9 @@
       }
       let timeoutId;
 
-      function startRecognition() {
+function startRecognition() {
   // Muda o texto do botão para "Reconhecendo fala"
-  startButton.textContent = "Ouvindo...";
-  startButton.style.backgroundColor = "red";
+  startButton.textContent = "Reconhecendo fala";
 
   recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
   recognition.lang = new URLSearchParams(window.location.search).get("lang") || "pt-BR";

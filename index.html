@@ -147,6 +147,32 @@
         transition: background-color 0.3s ease;
         width: 100px; /* Ou o tamanho que você desejar */
       }
+
+      .custom-dropdown {
+        font-family: 'Cousine', monospace; /* Tipo de letra */
+        color: #ffffff; /* Cor do texto */
+        background-color: #333333; /* Cor de fundo do dropdown */
+        border: 1px solid #ffffff; /* Cor da borda */
+        border-radius: 5px; /* Raio da borda */
+        padding: 5px; /* Espaçamento interno */
+        outline: none; /* Remove o contorno ao focar */
+        cursor: pointer; /* Muda o cursor para um ponteiro */
+      }
+
+      .custom-dropdown:hover,
+      .custom-dropdown:focus {
+        background-color: #555555; /* Cor de fundo do dropdown quando focado ou quando o mouse passa por cima */
+      }
+
+      .custom-dropdown option {
+        color: #000000; /* Cor do texto das opções */
+        background-color: #ffffff; /* Cor de fundo das opções */
+      }
+
+      .custom-dropdown option:hover,
+      .custom-dropdown option:focus {
+        background-color: #eeeeee; /* Cor de fundo das opções quando focadas ou quando o mouse passa por cima */
+      }
     </style>
     <title>Reconhecimento de Fala - LiveCap</title>
   </head>
@@ -154,7 +180,7 @@
     <div class="controls">
       <div>
         <label for="microphoneList">Escolha um microfone:</label>
-        <select id="microphoneList"></select>
+        <select id="microphoneList" class="custom-dropdown"></select>
       </div>
       <button id="startButton">Iniciar</button>
       <button id="button1" class="customButton">v2</button>
@@ -195,7 +221,7 @@
       </div>
       <div>
         <label for="fontFamily">Estilo da Fonte: </label>
-        <select id="fontFamily">
+        <select id="fontFamily" class="custom-dropdown">
           <option value="'Cousine', monospace">Cousine</option>
           <option value="'Roboto', sans-serif">Roboto</option>
           <option value="'Montserrat', sans-serif">Montserrat</option>

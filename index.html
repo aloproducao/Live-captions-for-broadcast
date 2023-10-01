@@ -1,14 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta charset="UTF-8">
-<meta name="description" content="O Sistema de Reconhecimento de Fala em Tempo Real desenvolvido por Miguel Kallemback transforma a acessibilidade em conteúdo audiovisual, oferecendo transcrição de áudio em tempo real em diversos idiomas. Ideal para profissionais da indústria audiovisual procurando uma solução econômica para tornar seu conteúdo acessível a um público mais amplo.">
-<meta name="keywords" content="reconhecimento de fala, transcrição de áudio, acessibilidade, conteúdo audiovisual, legendas ao vivo, Miguel Kallemback, multilíngue, tecnologia de reconhecimento de voz">
-<meta name="author" content="Miguel Kallemback">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-    body {
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="O Sistema de Reconhecimento de Fala em Tempo Real desenvolvido por Miguel Kallemback transforma a acessibilidade em conteúdo audiovisual, oferecendo transcrição de áudio em tempo real em diversos idiomas. Ideal para profissionais da indústria audiovisual procurando uma solução econômica para tornar seu conteúdo acessível a um público mais amplo."
+    />
+    <meta
+      name="keywords"
+      content="reconhecimento de fala, transcrição de áudio, acessibilidade, conteúdo audiovisual, legendas ao vivo, Miguel Kallemback, multilíngue, tecnologia de reconhecimento de voz"
+    />
+    <meta name="author" content="Miguel Kallemback" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&family=Cousine&family=Montserrat:wght@400&family=Oswald:wght@400&family=Lobster&family=Pacifico&family=Quicksand:wght@500&family=Lato:wght@400&family=Source+Sans+Pro:wght@400&family=Open+Sans:wght@400&family=Zilla+Slab:wght@500&family=Playfair+Display:wght@400&family=Merriweather:wght@400&family=Arvo:wght@400&family=Ubuntu:wght@400&display=swap"
+    />
+
+    <style>
+      body {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -16,123 +26,373 @@
         color: white;
         height: 100vh;
         margin: 0;
-    }
-    .controls {
+        transition: text 0.3s ease;
+      }
+      .controls {
         display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
         align-items: center;
         font-family: 'Cousine', monospace;
-        font-size: 1.2em;
-        margin: 1em;
-        color: white;
-    }
-    .controls label, .controls select, .controls button {
+        font-size: 1em;
         margin: 0.5em;
-    }
-    .output {
+        padding: 0.5em;
+        background-color: rgb(51, 51, 51);
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        max-width: 500px;
+        justify-content: space-between;
+      }
+      .controls label,
+      .controls select,
+      .controls button,
+      .controls input {
+        margin: 0.2em;
+      }
+      .controls > div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .output {
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
         align-items: center;
-        background-color: rgba(0, 0, 0, 0.7);
-        color: white;
+        background-color: rgba(0, 0, 0, 0);
         font-family: 'Cousine', monospace;
         font-size: 2.5em;
         line-height: 1.1em;
         letter-spacing: 0.05em;
         padding: 0.5em;
-        border-radius: 0.5em;
+      
         width: 60%;
-        height: 150px; /* Você pode ajustar a altura conforme necessário */
+        height: 150px;
         overflow-y: auto;
-        text-align: center;
+        text-align: left !important;
         margin: auto;
-    }
-    #startButton {
-    display: inline-block;
-    padding: 0.5em 1em;
-    font-size: 1rem;
-    font-family: 'Cousine', monospace;
-    color: #5cf676; /* Cor da fonte (púrpura) */
-    border: 2px solid #5cf664; /* Borda púrpura */
-    background-color: transparent; /* Fundo transparente */
-    border-radius: 0.375em; /* Arredondamento da borda */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Transição suave */
-}
+        transition: background-color 0.3s;
+        resize: none;
+        overflow: auto;
+        transition: text 0.3s ease !important;
+      }
+      #resetPreferences{
+        display: inline-block;
+        padding: 0.5em 1em;
+        font-size: 1rem;
+        color: white;
+        font-family: 'Cousine', monospace;
+        border: 2px solid #f6df5c;
+        background-color: transparent;
+        border-radius: 0.375em;
+        transition: background-color 0.3s ease;
+      }
+      #copyButton {
+        display: inline-block;
+        padding: 0.5em 1em;
+        font-size: 1rem;
+        color: white;
+        font-family: 'Cousine', monospace;
+        border: 2px solid #615cf6;
+        background-color: transparent;
+        border-radius: 0.375em;
+        transition: background-color 0.3s ease;
+      }
+      #startButton {
+        display: inline-block;
+        padding: 0.5em 1em;
+        font-size: 1rem;
+        color: white;
+        font-family: 'Cousine', monospace;
+        border: 2px solid #5cf664;
+        background-color: transparent;
+        border-radius: 0.375em;
+        transition: background-color 0.3s ease;
+      }
+      #startButton:hover {
+        background-color: #5cf664;
+        color: rgb(61, 61, 61);
+      }
+      .color-picker,
+      .font-slider {
+        display: flex;
+        align-items: center;
+        margin: 0.2em;
+      }
+      .color-picker label,
+      .font-slider label {
+        margin-right: 0.5em;
+      }
+      #output {
+        transition: text 0.3s ease;
+        color: white;
+      }
+      textarea {
+        overflow: auto;
+        scrollbar-width: none; /* Para navegadores Firefox */
+      }
 
-#startButton:hover {
-    background-color: #8b5cf6; /* Fundo púrpura ao passar o mouse */
-    color: white; /* Cor da fonte branca ao passar o mouse */
-}
-label[for="microphoneList"] {
-    font-family: 'Cousine', monospace;
-    font-size: 1rem;
-    color: #8b5cf6; /* Cor púrpura para a fonte */
-    margin-right: 0.5em; /* Espaçamento à direita */
-}
+      textarea::-webkit-scrollbar {
+        width: 0px; /* Para navegadores WebKit, Chrome, Safari etc. */
+      }
+    </style>
+    <title>Reconhecimento de Fala - LiveCap</title>
+  </head>
+  <body>
+    <div class="controls">
+      <div>
+        <label for="microphoneList">Escolha um microfone:</label>
+        <select id="microphoneList"></select>
+      </div>
+      <button id="startButton">Iniciar</button>
 
+      <!-- Seletor de Cor de Fundo e Letra -->
+      <div class="color-picker">
+        <label for="bgColor">Cor de Fundo: </label>
+        <input type="color" id="bgColor" name="bgColor" value="#000000" />
+      </div>
+      <div class="color-picker">
+        <label for="textColor">Cor da Letra: </label>
+        <input type="color" id="textColor" name="textColor" value="#ffffff" />
+      </div>
 
-</style>
-<title>Reconhecimento de Fala - LiveCap</title>
-</head>
-<body>
-<div class="controls">
-    <label for="microphoneList">Escolha um microfone:</label>
-    <select id="microphoneList"></select>
-    <button id="startButton">Iniciar</button>
-</div>
-<div class="output" id="output">As legendas aparecerão aqui...</div>
+      <!-- Controle Deslizante para a Largura do Output e Tamanho da Fonte -->
+      <div class="font-slider">
+        <label for="fontSize">Tamanho da Fonte: </label>
+        <input
+          type="range"
+          id="fontSize"
+          name="fontSize"
+          min="10"
+          max="100"
+          value="25"
+        />
+      </div>
+      <div class="font-slider">
+        <label for="outputWidth">Largura do Output: </label>
+        <input
+          type="range"
+          id="outputWidth"
+          name="outputWidth"
+          min="20"
+          max="100"
+          value="60"
+        />
+      </div>
+      <div>
+        <label for="fontFamily">Estilo da Fonte: </label>
+        <select id="fontFamily">
+          <option value="'Cousine', monospace">Cousine</option>
+          <option value="'Roboto', sans-serif">Roboto</option>
+          <option value="'Montserrat', sans-serif">Montserrat</option>
+          <option value="'Oswald', sans-serif">Oswald</option>
+          <option value="'Lobster', cursive">Lobster</option>
+          <option value="'Pacifico', cursive">Pacifico</option>
+          <option value="'Quicksand', sans-serif">Quicksand</option>
+          <option value="'Lato', sans-serif">Lato</option>
+          <option value="'Source Sans Pro', sans-serif">Source Sans Pro</option>
+          <option value="'Open Sans', sans-serif">Open Sans</option>
+          <option value="'Zilla Slab', serif">Zilla Slab</option>
+          <option value="'Playfair Display', serif">Playfair Display</option>
+          <option value="'Merriweather', serif">Merriweather</option>
+          <option value="'Arvo', serif">Arvo</option>
+          <option value="'Ubuntu', sans-serif">Ubuntu</option>
+        </select>
+      </div>
 
-<script>
-    const output = document.getElementById('output');
-    const microphoneList = document.getElementById('microphoneList');
-    const startButton = document.getElementById('startButton');
-    let recognition;
+      <div>
+        <label for="uppercaseCheckbox">Todas as Letras Maiúsculas: </label>
+        <input
+          type="checkbox"
+          id="uppercaseCheckbox"
+          name="uppercaseCheckbox"
+        />
+      </div>
+      <!-- Botão para apagar preferências -->
+      <button id="copyButton">Copiar Texto</button
+      ><button id="resetPreferences">Resetar Preferências</button>
+    </div>
 
-    async function getMicrophones() {
+    <textarea class="output" id="output" readonly>
+As legendas aparecerão aqui...</textarea
+    >
+    <script>
+      const output = document.getElementById('output');
+      const microphoneList = document.getElementById('microphoneList');
+      const startButton = document.getElementById('startButton');
+      let recognition;
+
+      async function getMicrophones() {
         try {
-            await navigator.mediaDevices.getUserMedia({ audio: true }); // Solicita permissão para acessar o microfone
-            const devices = await navigator.mediaDevices.enumerateDevices();
-            const microphones = devices.filter(device => device.kind === 'audioinput');
-            microphones.forEach(mic => {
-                const option = document.createElement('option');
-                option.value = mic.deviceId;
-                option.textContent = mic.label || 'Microfone ' + (microphoneList.length + 1);
-                microphoneList.appendChild(option);
-            });
+          await navigator.mediaDevices.getUserMedia({ audio: true });
+          const devices = await navigator.mediaDevices.enumerateDevices();
+          const microphones = devices.filter(
+            (device) => device.kind === 'audioinput',
+          );
+          microphones.forEach((mic) => {
+            const option = document.createElement('option');
+            option.value = mic.deviceId;
+            option.textContent =
+              mic.label || 'Microfone ' + (microphoneList.length + 1);
+            microphoneList.appendChild(option);
+          });
         } catch (error) {
-            console.error('Erro ao acessar o microfone: ', error);
+          console.error('Erro ao acessar o microfone: ', error);
         }
-    }
+      }
+      let timeoutId;
 
-    function startRecognition() {
-        recognition = new webkitSpeechRecognition();
-        const urlParams = new URLSearchParams(window.location.search);
-        recognition.lang = urlParams.get('lang') || 'pt-BR';
+      function startRecognition() {
+        // Muda o texto do botão para "Reconhecendo fala"
+        startButton.textContent = 'Ouvindo';
+
+        recognition = new (window.SpeechRecognition ||
+          window.webkitSpeechRecognition)();
+        recognition.lang =
+          new URLSearchParams(window.location.search).get('lang') || 'pt-BR';
         recognition.interimResults = true;
 
+        let finalTranscript = '';
         recognition.onresult = (event) => {
-            let transcript = Array.from(event.results)
-                .map(result => result[0])
-                .map(result => result.transcript)
-                .join('');
-            output.textContent = transcript;
+          let interimTranscript = '';
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            const transcript = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+              finalTranscript += transcript + ' '; // Adiciona um espaço após cada transcrição final
+            } else {
+              interimTranscript += transcript;
+            }
+          }
+          output.value = finalTranscript + interimTranscript;
+          output.scrollTop = output.scrollHeight;
         };
 
         recognition.onerror = (event) => {
-            console.error(event.error);
+          console.error(event.error);
         };
 
         recognition.onend = () => {
-            recognition.start();
+          recognition.start();
+          // Muda o texto do botão de volta para "Iniciar" quando o reconhecimento de fala termina
+          startButton.textContent = 'Iniciar';
         };
 
         recognition.start();
-    }
+      }
 
-    window.onload = getMicrophones; // Inicia a função getMicrophones assim que a página é carregada
+      startButton.addEventListener('click', startRecognition);
 
-    startButton.addEventListener('click', startRecognition);
-</script>
+      function loadPreferences() {
+        const bgColor = localStorage.getItem('bgColor');
+        const textColor = localStorage.getItem('textColor');
+        const fontSize = localStorage.getItem('fontSize');
+        const outputWidth = localStorage.getItem('outputWidth');
+        const fontFamily = localStorage.getItem('fontFamily');
+        if (fontFamily) {
+          document.getElementById('output').style.fontFamily = fontFamily;
+          document.getElementById('fontFamily').value = fontFamily;
+        }
+      }
+      if (bgColor) {
+        document.body.style.backgroundColor = bgColor;
+        document.getElementById('bgColor').value = bgColor;
+      }
 
-</body>
+      if (textColor) {
+        document.body.style.color = textColor;
+        document.getElementById('textColor').value = textColor;
+      }
+
+      if (fontSize) {
+        document.getElementById('output').style.fontSize = fontSize + 'px';
+        document.getElementById('fontSize').value = fontSize;
+      }
+
+      if (outputWidth) {
+        document.getElementById('output').style.width = outputWidth + '%';
+        document.getElementById('outputWidth').value = outputWidth;
+      }
+
+      function resetPreferences() {
+        if (confirm('Tem certeza de que deseja resetar as preferências?')) {
+          localStorage.removeItem('bgColor');
+          localStorage.removeItem('textColor');
+          localStorage.removeItem('fontSize');
+          localStorage.removeItem('outputWidth');
+          localStorage.removeItem('fontFamily');
+          loadPreferences();
+          location.reload();
+        }
+      }
+
+      document
+        .getElementById('resetPreferences')
+        .addEventListener('click', resetPreferences);
+
+      document
+        .getElementById('fontFamily')
+        .addEventListener('change', function () {
+          document.getElementById('output').style.fontFamily = this.value;
+          localStorage.setItem('fontFamily', this.value);
+        });
+      document.getElementById('bgColor').addEventListener('input', function () {
+        document.body.style.backgroundColor = this.value;
+        localStorage.setItem('bgColor', this.value);
+      });
+
+      document
+        .getElementById('textColor')
+        .addEventListener('input', function () {
+          document.body.style.color = this.value;
+          document.getElementById('output').style.color = this.value; // Corrigido para mudar a cor do texto dentro do textarea
+          localStorage.setItem('textColor', this.value);
+        });
+      document
+        .getElementById('fontSize')
+        .addEventListener('input', function () {
+          document.getElementById('output').style.fontSize = this.value + 'px';
+          localStorage.setItem('fontSize', this.value);
+        });
+
+      document
+        .getElementById('outputWidth')
+        .addEventListener('input', function () {
+          document.getElementById('output').style.width = this.value + '%';
+          localStorage.setItem('outputWidth', this.value);
+        });
+
+      document
+        .getElementById('copyButton')
+        .addEventListener('click', function () {
+          output.select();
+          output.setSelectionRange(0, 99999); // Para dispositivos móveis
+          document.execCommand('copy');
+          alert('Texto copiado: ' + output.value);
+        });
+
+      window.onload = function () {
+        document
+          .getElementById('uppercaseCheckbox')
+          .addEventListener('change', function () {
+            if (this.checked) {
+              document.getElementById('output').style.textTransform =
+                'uppercase';
+            } else {
+              document.getElementById('output').style.textTransform = 'none';
+            }
+          });
+
+        getMicrophones();
+        loadPreferences();
+      };
+
+      // Function to scroll the textarea to the bottom
+      function scrollToBottom() {
+        output.scrollTop = output.scrollHeight;
+      }
+
+      // Adding event listener to scroll the textarea to the bottom on input event
+      output.addEventListener('input', scrollToBottom);
+    </script>
+  </body>
 </html>

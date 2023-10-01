@@ -1,5 +1,6 @@
 # Real-time Speech Recognition System
-![image](https://github.com/aloproducao/Live-captions-for-broadcast/assets/43450424/04b199d6-8a51-4656-ae53-54b159fcc9c6)
+![image](https://github.com/aloproducao/Live-captions-for-broadcast/assets/43450424/292be4cd-bdfd-42d5-8dc3-3475f70431c1)
+
 
 ## Motivation
 

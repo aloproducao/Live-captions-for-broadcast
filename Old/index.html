@@ -65,7 +65,7 @@
         line-height: 1.1em;
         letter-spacing: 0.05em;
         padding: 0.5em;
-
+      
         width: 60%;
         height: 150px;
         overflow-y: auto;
@@ -76,7 +76,7 @@
         overflow: auto;
         transition: text 0.3s ease !important;
       }
-      #resetPreferences {
+      #resetPreferences{
         display: inline-block;
         padding: 0.5em 1em;
         font-size: 1rem;
@@ -135,18 +135,6 @@
       textarea::-webkit-scrollbar {
         width: 0px; /* Para navegadores WebKit, Chrome, Safari etc. */
       }
-      .customButton {
-        display: inline-block;
-        padding: 0.5em 1em;
-        font-size: 1rem;
-        color: white;
-        font-family: 'Cousine', monospace;
-        border: 2px solid #f6df5c;
-        background-color: transparent;
-        border-radius: 0.375em;
-        transition: background-color 0.3s ease;
-        width: 100px; /* Ou o tamanho que você desejar */
-      }
     </style>
     <title>Reconhecimento de Fala - LiveCap</title>
   </head>
@@ -157,8 +145,6 @@
         <select id="microphoneList"></select>
       </div>
       <button id="startButton">Iniciar</button>
-      <button id="button1" class="customButton">v2</button>
-      <button id="button2" class="customButton">Manual</button>
 
       <!-- Seletor de Cor de Fundo e Letra -->
       <div class="color-picker">
@@ -383,13 +369,6 @@ As legendas aparecerão aqui...</textarea
           document.execCommand('copy');
           alert('Texto copiado: ' + output.value);
         });
-      document.getElementById('button1').addEventListener('click', function () {
-        window.location.href = '/legenda/index2.html'; // Substitua pelo link desejado para o Botão 1
-      });
-
-      document.getElementById('button2').addEventListener('click', function () {
-        window.open('/legenda/manual-livecap.pdf', '_blank'); // Substituirá pelo link desejado para o Botão 2
-      });
 
       window.onload = function () {
         document

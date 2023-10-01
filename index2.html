@@ -28,6 +28,19 @@
         margin: 0;
         transition: text 0.3s ease;
       }
+      .customButton {
+        display: inline-block;
+        padding: 0.5em 1em;
+        font-size: 1rem;
+        color: white;
+        font-family: 'Cousine', monospace;
+        border: 2px solid #f6df5c;
+        background-color: transparent;
+        border-radius: 0.375em;
+        transition: background-color 0.3s ease;
+        width: 100px; /* Ou o tamanho que você desejar */
+      }
+
       .controls {
         display: flex;
         flex-direction: row;
@@ -65,38 +78,14 @@
         line-height: 1.1em;
         letter-spacing: 0.05em;
         padding: 0.5em;
-
+        border-radius: 0.5em;
         width: 60%;
         height: 150px;
         overflow-y: auto;
         text-align: left !important;
         margin: auto;
         transition: background-color 0.3s;
-        resize: none;
-        overflow: auto;
         transition: text 0.3s ease !important;
-      }
-      #resetPreferences {
-        display: inline-block;
-        padding: 0.5em 1em;
-        font-size: 1rem;
-        color: white;
-        font-family: 'Cousine', monospace;
-        border: 2px solid #f6df5c;
-        background-color: transparent;
-        border-radius: 0.375em;
-        transition: background-color 0.3s ease;
-      }
-      #copyButton {
-        display: inline-block;
-        padding: 0.5em 1em;
-        font-size: 1rem;
-        color: white;
-        font-family: 'Cousine', monospace;
-        border: 2px solid #615cf6;
-        background-color: transparent;
-        border-radius: 0.375em;
-        transition: background-color 0.3s ease;
       }
       #startButton {
         display: inline-block;
@@ -125,27 +114,6 @@
       }
       #output {
         transition: text 0.3s ease;
-        color: white;
-      }
-      textarea {
-        overflow: auto;
-        scrollbar-width: none; /* Para navegadores Firefox */
-      }
-
-      textarea::-webkit-scrollbar {
-        width: 0px; /* Para navegadores WebKit, Chrome, Safari etc. */
-      }
-      .customButton {
-        display: inline-block;
-        padding: 0.5em 1em;
-        font-size: 1rem;
-        color: white;
-        font-family: 'Cousine', monospace;
-        border: 2px solid #f6df5c;
-        background-color: transparent;
-        border-radius: 0.375em;
-        transition: background-color 0.3s ease;
-        width: 100px; /* Ou o tamanho que você desejar */
       }
     </style>
     <title>Reconhecimento de Fala - LiveCap</title>
@@ -157,7 +125,7 @@
         <select id="microphoneList"></select>
       </div>
       <button id="startButton">Iniciar</button>
-      <button id="button1" class="customButton">v2</button>
+      <button id="button1" class="customButton">v1</button>
       <button id="button2" class="customButton">Manual</button>
 
       <!-- Seletor de Cor de Fundo e Letra -->
@@ -223,13 +191,11 @@
         />
       </div>
       <!-- Botão para apagar preferências -->
-      <button id="copyButton">Copiar Texto</button
-      ><button id="resetPreferences">Resetar Preferências</button>
+      <button id="resetPreferences">Resetar Preferências</button>
     </div>
 
-    <textarea class="output" id="output" readonly>
-As legendas aparecerão aqui...</textarea
-    >
+    <div class="output" id="output">As legendas aparecerão aqui...</div>
+
     <script>
       const output = document.getElementById('output');
       const microphoneList = document.getElementById('microphoneList');
@@ -277,8 +243,16 @@ As legendas aparecerão aqui...</textarea
               interimTranscript += transcript;
             }
           }
-          output.value = finalTranscript + interimTranscript;
-          output.scrollTop = output.scrollHeight;
+          output.textContent = finalTranscript + interimTranscript;
+
+          // Reseta o temporizador cada vez que um novo resultado é capturado
+          clearTimeout(timeoutId);
+
+          // Inicia um novo temporizador
+          timeoutId = setTimeout(() => {
+            finalTranscript = '';
+            output.textContent = '';
+          }, 2000); // 3000 ms (3 segundos) é o tempo de espera; ajuste conforme necessário
         };
 
         recognition.onerror = (event) => {
@@ -358,9 +332,9 @@ As legendas aparecerão aqui...</textarea
         .getElementById('textColor')
         .addEventListener('input', function () {
           document.body.style.color = this.value;
-          document.getElementById('output').style.color = this.value; // Corrigido para mudar a cor do texto dentro do textarea
           localStorage.setItem('textColor', this.value);
         });
+
       document
         .getElementById('fontSize')
         .addEventListener('input', function () {
@@ -374,17 +348,8 @@ As legendas aparecerão aqui...</textarea
           document.getElementById('output').style.width = this.value + '%';
           localStorage.setItem('outputWidth', this.value);
         });
-
-      document
-        .getElementById('copyButton')
-        .addEventListener('click', function () {
-          output.select();
-          output.setSelectionRange(0, 99999); // Para dispositivos móveis
-          document.execCommand('copy');
-          alert('Texto copiado: ' + output.value);
-        });
       document.getElementById('button1').addEventListener('click', function () {
-        window.location.href = '/legenda/index2.html'; // Substitua pelo link desejado para o Botão 1
+        window.location.href = 'https://navve.studio/legenda/index.html'; // Substitua pelo link desejado para o Botão 1
       });
 
       document.getElementById('button2').addEventListener('click', function () {
@@ -406,14 +371,6 @@ As legendas aparecerão aqui...</textarea
         getMicrophones();
         loadPreferences();
       };
-
-      // Function to scroll the textarea to the bottom
-      function scrollToBottom() {
-        output.scrollTop = output.scrollHeight;
-      }
-
-      // Adding event listener to scroll the textarea to the bottom on input event
-      output.addEventListener('input', scrollToBottom);
     </script>
   </body>
 </html>
